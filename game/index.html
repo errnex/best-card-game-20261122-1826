@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Court — a card duel</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">EMBER COURT</div>
+    <div id="turnBadge" class="turn-badge">Turn 1</div>
+    <div id="emberBox" class="ember-box" title="Ember — spend it to play cards"></div>
+    <div id="scoreBox" class="score-box">Wins 0 · Losses 0</div>
+  </header>
+
+  <section id="foeRow" class="side-row foe-row">
+    <div class="portrait foe-portrait" title="The Warden of Cinders">W</div>
+    <div class="side-info">
+      <div class="side-name">WARDEN OF CINDERS <span id="foeIntent" class="intent"></span></div>
+      <div class="hp-bar"><div id="foeHpFill" class="hp-fill foe-hp"></div><span id="foeHpText" class="hp-text"></span></div>
+      <div id="foeBlock" class="block-line"></div>
+    </div>
+    <div id="foeHand" class="mini-hand" title="The Warden's hand — face down"></div>
+  </section>
+
+  <section id="tableRow" class="table-row">
+    <div id="playedFoe" class="played-zone"></div>
+    <div id="middleCol">
+      <div id="comboBanner" class="combo-banner"></div>
+      <div id="logBox" class="log-box"></div>
+      <button id="endTurnBtn" class="end-turn">END TURN&nbsp;&nbsp;[E]</button>
+    </div>
+    <div id="playedYou" class="played-zone"></div>
+  </section>
+
+  <section id="youRow" class="side-row you-row">
+    <div class="portrait you-portrait" title="You, the Ember Challenger">Y</div>
+    <div class="side-info">
+      <div class="side-name">YOU — EMBER CHALLENGER</div>
+      <div class="hp-bar"><div id="youHpFill" class="hp-fill you-hp"></div><span id="youHpText" class="hp-text"></span></div>
+      <div id="youBlock" class="block-line"></div>
+    </div>
+    <div id="youHand" class="hand"></div>
+  </section>
+
+  <div id="overlay" class="overlay hidden">
+    <div id="overlayCard" class="overlay-card"></div>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

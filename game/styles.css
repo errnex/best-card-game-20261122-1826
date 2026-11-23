@@ -1,0 +1,80 @@
+/* Ember Court — table styling. Four houses, four colours, four shapes:
+   Flame ▲ red, Tide ● blue, Thorn ◆ green, Stone ■ amber. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: radial-gradient(1200px 700px at 50% -10%, #2b3a2e 0%, #14201a 45%, #0b120e 100%);
+  color: #f3ead8;
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow: hidden;
+}
+#app { width: 1280px; height: 800px; margin: 0 auto; display: flex; flex-direction: column; padding: 10px 18px; }
+
+#topbar { display: flex; align-items: center; gap: 18px; padding: 2px 4px 8px; border-bottom: 2px solid #6b5a2e; }
+.brand { font-size: 26px; letter-spacing: 6px; color: #f5c542; text-shadow: 0 2px 0 #7a2d12, 0 0 22px rgba(245,197,66,.45); font-weight: bold; }
+.turn-badge { background: #24382c; border: 1px solid #6b5a2e; border-radius: 999px; padding: 4px 14px; font-size: 15px; }
+.ember-box { display: flex; gap: 4px; align-items: center; font-size: 15px; }
+.ember-pip { width: 18px; height: 18px; border-radius: 50%; background: #3a2c14; border: 2px solid #8a6d2f; display: inline-block; }
+.ember-pip.lit { background: radial-gradient(circle at 35% 35%, #ffe27a, #f5a623 60%, #c25e00); border-color: #ffd75e; box-shadow: 0 0 8px rgba(245,166,35,.8); }
+.score-box { margin-left: auto; font-size: 14px; color: #cbb98a; }
+
+.side-row { display: flex; align-items: center; gap: 16px; padding: 8px 4px; }
+.portrait { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; flex: none; border: 3px solid #d8b45a; }
+.foe-portrait { background: radial-gradient(circle at 35% 30%, #7a1f1f, #3d0d0d); color: #ffb199; }
+.you-portrait { background: radial-gradient(circle at 35% 30%, #1f4d7a, #0d2a44); color: #bfe3ff; }
+.side-info { width: 300px; flex: none; }
+.side-name { font-size: 17px; letter-spacing: 1px; margin-bottom: 5px; }
+.intent { font-size: 13px; color: #ffb199; font-style: italic; letter-spacing: 0; }
+.hp-bar { position: relative; height: 22px; background: #241a12; border: 1px solid #6b5a2e; border-radius: 4px; overflow: hidden; }
+.hp-fill { height: 100%; transition: width .45s ease; }
+.foe-hp { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+.you-hp { background: linear-gradient(90deg, #1e8449, #2ecc71); }
+.hp-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; text-shadow: 0 1px 2px #000; }
+.block-line { min-height: 18px; font-size: 13px; color: #9ecfff; margin-top: 3px; }
+
+.mini-hand { display: flex; gap: 6px; margin-left: auto; }
+.mini-card { width: 44px; height: 62px; border-radius: 6px; background: repeating-linear-gradient(45deg, #5a1f1f 0 8px, #7a2d2d 8px 16px); border: 2px solid #d8b45a; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #f5c542; }
+
+.table-row { flex: 1; display: flex; gap: 14px; align-items: stretch; padding: 6px 0; min-height: 0; }
+.played-zone { width: 300px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; padding: 8px; background: rgba(0,0,0,.25); border: 1px dashed #6b5a2e; border-radius: 10px; }
+.played-zone:empty::after { content: '— no cards played yet —'; color: #8a7a55; font-style: italic; font-size: 13px; margin: auto; }
+#middleCol { flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.combo-banner { min-height: 26px; font-size: 17px; font-weight: bold; color: #ffd75e; text-shadow: 0 0 12px rgba(255,215,94,.6); text-align: center; }
+.log-box { flex: 1; width: 100%; overflow: hidden; background: rgba(0,0,0,.3); border: 1px solid #4a3f28; border-radius: 8px; padding: 8px 12px; font-size: 13.5px; line-height: 1.55; color: #e8dcc0; }
+.log-box div:last-child { color: #ffd75e; }
+.end-turn { background: linear-gradient(180deg, #f5c542, #c98a12); color: #2a1c05; border: 2px solid #ffe27a; border-radius: 8px; font-size: 18px; font-weight: bold; letter-spacing: 2px; padding: 10px 34px; cursor: pointer; font-family: inherit; box-shadow: 0 4px 0 #7a5a10; }
+.end-turn:active { transform: translateY(3px); box-shadow: 0 1px 0 #7a5a10; }
+.end-turn:disabled { filter: grayscale(1); opacity: .55; cursor: default; }
+
+.hand { display: flex; gap: 10px; margin-left: auto; align-items: flex-end; }
+.card { width: 118px; height: 156px; border-radius: 10px; background: linear-gradient(165deg, #fdf6e3, #e9dcc0 70%); color: #241a12; border: 3px solid var(--house); padding: 7px 8px; display: flex; flex-direction: column; cursor: pointer; position: relative; transition: transform .18s ease, box-shadow .18s ease; box-shadow: 0 4px 10px rgba(0,0,0,.5); user-select: none; }
+.card:hover { transform: translateY(-14px) scale(1.04); box-shadow: 0 14px 22px rgba(0,0,0,.6); z-index: 5; }
+.card.unaffordable { opacity: .55; filter: grayscale(.5); }
+.card.just-played { animation: snapIn .35s ease; }
+@keyframes snapIn { from { transform: translateY(-30px) scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+.card .cost { position: absolute; top: 5px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--house); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; border: 2px solid #fff3; }
+.card .house-tag { font-size: 12px; letter-spacing: 1px; font-weight: bold; color: var(--house); text-transform: uppercase; }
+.card .glyph { font-size: 29px; color: var(--house); text-align: center; line-height: 1.05; margin: 1px 0; }
+.card .name { font-size: 15px; font-weight: bold; text-align: center; line-height: 1.15; }
+.card .power { font-size: 27px; font-weight: bold; text-align: center; color: var(--house); line-height: 1; margin-top: 3px; }
+.card .power small { font-size: 12px; color: #6b5a2e; display: block; letter-spacing: 1px; }
+.card .flavour { margin-top: auto; font-size: 11px; font-style: italic; color: #6b5a2e; text-align: center; line-height: 1.25; }
+.card.foe-played { cursor: default; }
+.card.foe-played:hover { transform: none; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
+
+.overlay { position: fixed; inset: 0; background: rgba(5,8,6,.82); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.overlay.hidden { display: none; }
+.overlay-card { width: 640px; max-width: 90vw; background: linear-gradient(170deg, #2b2118, #171208); border: 3px solid #d8b45a; border-radius: 16px; padding: 34px 40px; text-align: center; box-shadow: 0 0 60px rgba(245,197,66,.25); }
+.overlay-card h1 { font-size: 44px; letter-spacing: 4px; color: #f5c542; margin-bottom: 6px; }
+.overlay-card h2 { font-size: 30px; color: #ffd75e; margin-bottom: 10px; }
+.overlay-card p { font-size: 16px; line-height: 1.6; color: #e8dcc0; margin: 8px 0; }
+.overlay-card .big { font-size: 20px; font-weight: bold; color: #fff; }
+.overlay-card .stats { font-size: 15px; color: #cbb98a; }
+.overlay-card button { margin-top: 18px; background: linear-gradient(180deg, #f5c542, #c98a12); color: #2a1c05; border: 2px solid #ffe27a; border-radius: 8px; font-size: 19px; font-weight: bold; letter-spacing: 2px; padding: 12px 40px; cursor: pointer; font-family: inherit; }
+.overlay-card .houses { display: flex; gap: 10px; justify-content: center; margin: 14px 0; }
+.overlay-card .houses span { font-size: 14px; padding: 6px 12px; border-radius: 999px; border: 2px solid; }
+.overlay-card .keys { font-size: 13px; color: #9a8a68; margin-top: 12px; }
+.win-flourish { animation: flourish 1s ease; }
+@keyframes flourish { 0% { transform: scale(.7); opacity: 0; } 60% { transform: scale(1.06); } 100% { transform: scale(1); opacity: 1; } }
+.shake { animation: shake .4s ease; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
